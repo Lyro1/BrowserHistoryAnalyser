@@ -1,12 +1,17 @@
 import browserhistory as bh
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+import requests
 
 
-# Press the green button in the gutter to run the script.
+def check_url(url):
+    r = requests.post("https://urlhaus-api.abuse.ch/v1/" + url)
+    print(r.json)
+
+
 if __name__ == '__main__':
-    dict_obj = bh.get_browserhistory()
+    history = bh.get_browserhistory()
+    browsers = history.keys()
+    if len(browsers) > 0:
+        check_url(history[browsers[0]][0])
+    else:
+        print("No browsers available")
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
