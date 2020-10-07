@@ -10,7 +10,8 @@ def check_url(url):
 if __name__ == '__main__':
     history = bh.get_browserhistory()
     for browser in history:
-        check_url(history[browser][0])
+        print("Testing " + history[browser][0][0] + "...")
+        check_url(history[browser][0][0])
     else:
         print("No browsers available")
 
