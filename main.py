@@ -3,8 +3,9 @@ import requests
 
 
 def check_url(url):
+    print("Testing " + url + "...")
     r = requests.post("https://urlhaus-api.abuse.ch/v1/" + url)
-    if r.status_code != 404:
+    if r.status_code == 404:
         return None
     else:
         print(r.json())
