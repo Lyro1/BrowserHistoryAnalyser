@@ -7,8 +7,8 @@ def check_url(url):
     if r.status_code != 404:
         return None
     else:
-        print(r.json)
-        return r.json
+        print(r.json())
+        return r.json()
 
 
 if __name__ == '__main__':
