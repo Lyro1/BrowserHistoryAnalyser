@@ -1,34 +1,46 @@
 import browserhistory as bh
+import aiohttp
+import asyncio
 import requests
 
 
+async def get(url):
+    try:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url=url) as response:
+                resp = await response.read()
+                print("Successfully got url {} with response of length {}.".format(url, len(resp)))
+    except Exception as e:
+        print("Unable to get url {} due to {}.".format(url, e.__class__))
 
-def check_url(current, total, url):
-    r = requests.post("https://urlhaus-api.abuse.ch/v1/" + url)
-    print(str(current) + '/' + str(total))
 
-    if r.status_code == 404:
+def get_all_history():
+    history = bh.get_browserhistory()
+    entries = []
+    for browser in history:
+        entries += [entry[0] for entry in history[browser]]
+    return entries
+
+
+def check_urlhaus(current, response):
+    if response.status_code == 404:
         return current + 1, None
     else:
-        return current + 1, r.json()
+        return current + 1, response.json()
 
 
-if __name__ == '__main__':
-    history = bh.get_browserhistory()
-    total = 0
-    for browser in history:
-        total += len(history[browser])
+async def check_all_history():
+    history = get_all_history()
+    if len(history) <= 0:
+        print("No entry found.")
     current = 1
     foundDanger = 0
 
-    if total <= 0:
-        print("No entry found.")
-
-    for browser in history:
-        for entry in history[browser]:
-            current, json = check_url(current, total, entry[0])
-            if json:
-                foundDanger += 1
-                print(json)
+    ret = await asyncio.gather(*[get(url) for url in history])
 
     print("Results: " + str(foundDanger) + " dangerous URLs found.")
+
+
+if __name__ == '__main__':
+
+
