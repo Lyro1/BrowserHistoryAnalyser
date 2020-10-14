@@ -42,5 +42,5 @@ async def check_all_history():
 
 
 if __name__ == '__main__':
-
+    asyncio.run(check_all_history())
 
