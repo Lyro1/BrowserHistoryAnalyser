@@ -4,13 +4,13 @@ import asyncio
 import requests
 
 
-async def get(current, url):
+async def get(url):
     try:
         async with aiohttp.ClientSession() as session:
             async with session.get(url=url) as response:
-                print("Got {} (code {})".format(url, response.status))
+                print("Successfully got url {} with status codee {}.".format(url, response.status))
     except Exception as e:
-        print("Unable to get url {} due to {}.".format(url, e))
+        print("Unable to get url {} due to {}.".format(url, e.__class__))
 
 
 def get_all_history():
@@ -21,23 +21,20 @@ def get_all_history():
     return entries
 
 
-def check_urlhaus(current, response):
+def check_urlhaus(response):
     if response.status == 404:
-        return current + 1, None
+        return True
     else:
-        return current + 1, response.json()
+        return False
 
 
 async def check_all_history():
     history = get_all_history()
     if len(history) <= 0:
         print("No entry found.")
-    current = 1
     foundDanger = 0
 
-    ret = await asyncio.gather(*[get(current, "https://urlhaus-api.abuse.ch/v1/url/" + url) for url in history])
-
-    print("Results: " + str(foundDanger) + " dangerous URLs found.")
+    await asyncio.gather(*[get("https://urlhaus-api.abuse.ch/v1/url/" + url) for url in history])
 
 
 if __name__ == '__main__':
