@@ -1,8 +1,8 @@
 import browserhistory as bh
 import aiohttp
 import asyncio
-import requests
 
+sem = asyncio.Semaphore(50)
 
 async def get(url):
     try:
@@ -22,19 +22,16 @@ def get_all_history():
 
 
 def check_urlhaus(response):
-    if response.status == 404:
-        return True
-    else:
-        return False
+    return response.status == 404
 
 
 async def check_all_history():
-    history = get_all_history()
-    if len(history) <= 0:
-        print("No entry found.")
-    foundDanger = 0
+    async with sem:
+        history = get_all_history()
+        if len(history) <= 0:
+            print("No entry found.")
 
-    await asyncio.gather(*[get("https://urlhaus-api.abuse.ch/v1/url/" + url) for url in history])
+        await asyncio.gather(*[get("https://urlhaus-api.abuse.ch/v1/url/" + url) for url in history])
 
 
 if __name__ == '__main__':
