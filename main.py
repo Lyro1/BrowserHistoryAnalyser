@@ -27,7 +27,7 @@ def get_all_history():
 
 
 def check_urlhaus(response):
-    return response.status == 404
+    return response.status == 404 or response.status == 405
 
 
 async def check_all_history():
