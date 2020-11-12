@@ -4,14 +4,18 @@ import asyncio
 
 sem = asyncio.Semaphore(50)
 
-async def get(url):
+async def __get(url):
     try:
-        async with sem:
-            async with aiohttp.ClientSession() as session:
-                async with session.get(url=url) as response:
-                    print("Successfully got url {} with status codee {}.".format(url, response.status))
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url=url) as response:
+                print("Successfully got url {} with status codee {}.".format(url, response.status))
     except Exception as e:
         print("Unable to get url {} due to {}.".format(url, e.__class__))
+
+
+async def get(url):
+    async with sem:
+        return await __get(url)
 
 
 def get_all_history():
@@ -35,5 +39,10 @@ async def check_all_history():
 
 
 if __name__ == '__main__':
-    asyncio.run(check_all_history())
+    loop = asyncio.get_event_loop()
+    try:
+        loop.run_until_complete(check_all_history())
+    finally:
+        loop.run_until_complete(loop.shutdown_asyncgens())
+        loop.close()
 
