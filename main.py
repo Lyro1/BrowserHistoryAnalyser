@@ -41,11 +41,15 @@ async def check_all_history(size):
     await asyncio.gather(*[get("https://urlhaus-api.abuse.ch/v1/url/" + url) for url in history])
 
 
-if __name__ == '__main__':
+def main():
     loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(check_all_history(MAX_HISTORY_ENTRIES))
     finally:
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
+        
+
+if __name__ == '__main__':
+    main()
 
