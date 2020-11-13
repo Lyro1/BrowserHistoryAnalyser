@@ -2,10 +2,10 @@ import aiohttp
 import asyncio
 from src.Entities.History import History
 from src.Entities.HistoryEntry import HistoryEntry
+from src.config import Config
 
 
 sem = asyncio.Semaphore(50)
-MAX_HISTORY_ENTRIES = None
 
 
 async def __check_urlhaus(entry: HistoryEntry, service):
@@ -39,9 +39,10 @@ async def check_all_history(size):
 
 
 def main():
+    config = Config()
     loop = asyncio.get_event_loop()
     try:
-        loop.run_until_complete(check_all_history(MAX_HISTORY_ENTRIES))
+        loop.run_until_complete(check_all_history(config.max_entries))
     finally:
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()

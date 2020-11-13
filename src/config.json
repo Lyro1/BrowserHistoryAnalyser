@@ -1,0 +1,12 @@
+{
+  "max-entries": 50,
+  "sources": {
+    "url-haus": {
+      "enabled": "True"
+    },
+    "virus-total": {
+      "enabled": "False",
+      "api-key": ""
+    }
+  }
+}

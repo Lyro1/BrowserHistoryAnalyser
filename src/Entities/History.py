@@ -1,6 +1,7 @@
 import browserhistory as bh
 from .HistoryEntry import HistoryEntry
 
+
 class History(object):
 
     def __init__(self, maxLength = None):
