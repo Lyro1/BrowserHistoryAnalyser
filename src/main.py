@@ -1,31 +1,31 @@
 import aiohttp
 import asyncio
-from src import History
+from src.Entities.History import History
+from src.Entities.HistoryEntry import HistoryEntry
+
 
 sem = asyncio.Semaphore(50)
 MAX_HISTORY_ENTRIES = None
 
 
-async def __get(entry, service, check_method):
+async def __check_urlhaus(entry: HistoryEntry, service):
     try:
         async with aiohttp.ClientSession() as session:
-            async with session.get(url=service + entry.url) as response:
-                check_method(entry, response)
+            data = {'url': entry.url}
+            async with session.post(url=service, data=data) as response:
+                json = await response.json()
+                entry.flagged.url_haus = json['query_status'] == 'ok' and json['url_status'] == 'online'
     except Exception as e:
         print("Unable to get url {} due to {}.".format(service + entry.url, e.__class__))
 
 
-async def get(url, service, check_method):
+async def check_urlhaus(entry: HistoryEntry, service):
     async with sem:
-        return await __get(url, service, check_method)
-
-
-def check_urlhaus(entry, response):
-    entry.flagged = not (response.status == 404 or response.status == 405)
+        return await __check_urlhaus(entry, service)
 
 
 async def check_reputation(entry):
-    await asyncio.gather(get(entry, "https://urlhaus-api.abuse.ch/v1/url/", check_urlhaus))
+    await asyncio.gather(check_urlhaus(entry, "https://urlhaus-api.abuse.ch/v1/url/"))
 
 
 async def check_all_history(size):

@@ -6,4 +6,4 @@ class HistoryEntryFlags:
         self.virus_total = None
 
     def __str__(self):
-        return 'urlhaus: ' + self.url_haus + ', virus total: ' + self.virus_total
+        return 'urlhaus: ' + str(self.url_haus) + ', virus total: ' + str(self.virus_total)
