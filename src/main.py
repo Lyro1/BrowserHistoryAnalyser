@@ -7,7 +7,6 @@ from src.config import Config
 config = Config()
 sem = asyncio.Semaphore(config.max_threads)
 
-
 async def __check_urlhaus(entry: HistoryEntry, url):
     try:
         async with aiohttp.ClientSession() as session:
@@ -32,10 +31,8 @@ async def __check_virus_total(entry: HistoryEntry, url):
                                 "Add a valid API key in the config file.")
             async with session.get(url=url+'?apikey='+str(config.virus_total.api_key)+'&resource='+str(entry.url)) as response:
                 if response.status == 200:
-                    entry.flagged.virus_total = False
                     json = await response.json()
-                    for scan in json['scans']:
-                        entry.flagged.virus_total = entry.flagged.virus_total or scan['detected'] == 'true'
+                    entry.flagged.virus_total = (json['positives'] / json['total']) > 0.1
                 else:
                     entry.flagged.virus_total = False
     except Exception as e:
@@ -68,6 +65,7 @@ async def check_all_history(size):
 
 
 def main():
+    config.load_file()
     loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(check_all_history(config.max_entries))

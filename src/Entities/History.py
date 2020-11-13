@@ -4,10 +4,10 @@ from .HistoryEntry import HistoryEntry
 
 class History(object):
 
-    def __init__(self, maxLength=None):
+    def __init__(self, max_length=None):
         self.entries = []
-        self.__get_entries(maxLength)
-        self.maxLength = maxLength
+        self.__get_entries(max_length)
+        self.maxLength = max_length
 
     def __get_entries(self, maxLength):
         history = bh.get_browserhistory()

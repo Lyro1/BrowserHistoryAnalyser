@@ -4,3 +4,6 @@ venv/
 
 # Pytest
 .pytest_cache
+
+# Project
+local.config.json

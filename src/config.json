@@ -8,7 +8,7 @@
     },
     "virus-total": {
       "enabled": "False",
-      "api-key": "3a7b8c887497b3312d023e81e045a12b22c54b8619b9097856959115945e3e73"
+      "api-key": ""
     }
   }
 }
