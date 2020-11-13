@@ -11,10 +11,12 @@ class History(object):
 
     def __get_entries(self, max_length):
         history = get_history()
+        history_entries = history.entries
+        history_entries.reverse()
         self.entries = []
         if max_length is not None:
-            for entry in reversed(history.entries[:max_length]):
+            for entry in history_entries[:max_length]:
                 self.entries.append(HistoryEntry(entry[1]))
         else:
-            for entry in reversed(history.entries):
+            for entry in history_entries:
                 self.entries.append(HistoryEntry(entry[1]))

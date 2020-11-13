@@ -58,7 +58,7 @@ async def check_reputation(entry):
 async def check_all_history(size):
     history = History(size)
     await asyncio.gather(*[check_reputation(entry) for entry in history.entries])
-    flaggedEntries = [entry for entry in history.entries if entry.flagged.url_haus or entry.flagged.virus_total]
+    flaggedEntries = [entry for entry in history.entries] #if entry.flagged.url_haus or entry.flagged.virus_total]
     if len(flaggedEntries) == 0:
         print("No warning")
     else:
