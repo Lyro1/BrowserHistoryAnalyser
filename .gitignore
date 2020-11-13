@@ -1,2 +1,6 @@
-venv/
+# PyCharm
 .idea/
+venv/
+
+# Pytest
+.pytest_cache
