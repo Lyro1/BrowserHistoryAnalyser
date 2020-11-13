@@ -4,7 +4,7 @@ from .HistoryEntry import HistoryEntry
 
 class History(object):
 
-    def __init__(self, maxLength = None):
+    def __init__(self, maxLength=None):
         self.entries = []
         self.__get_entries(maxLength)
         self.maxLength = maxLength
