@@ -7,6 +7,7 @@ from src.config import Config
 config = Config()
 sem = asyncio.Semaphore(config.max_threads)
 
+
 async def __check_urlhaus(entry: HistoryEntry, url):
     try:
         async with aiohttp.ClientSession() as session:
@@ -57,7 +58,7 @@ async def check_reputation(entry):
 async def check_all_history(size):
     history = History(size)
     await asyncio.gather(*[check_reputation(entry) for entry in history.entries])
-    flaggedEntries = [entry for entry in history.entries if entry.flagged]
+    flaggedEntries = [entry for entry in history.entries if entry.flagged.url_haus or entry.flagged.virus_total]
     if len(flaggedEntries) == 0:
         print("No warning")
     else:
