@@ -1,5 +1,5 @@
 import pytest
-from src.main import *
+from main import *
 from src.Entities.HistoryEntry import HistoryEntry
 from src.config import Config
 

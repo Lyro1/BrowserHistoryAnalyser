@@ -65,7 +65,7 @@ async def check_all_history(size):
 
 
 def main():
-    config.load_file()
+    config.load_file('src')
     loop = asyncio.get_event_loop()
     try:
         loop.run_until_complete(check_all_history(config.max_entries))

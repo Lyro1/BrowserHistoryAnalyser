@@ -11,9 +11,9 @@ class Config:
         self.url_haus = ConfigEntry()
         self.virus_total = ConfigEntry()
 
-    def load_file(self, path = ''):
+    def load_file(self, path=''):
         if len(path) > 1:
-            path = path if path[-1] != '/' else path+'/'
+            path = path+'/' if path[-1] != '/' else path
         file = path + 'config.json'
         if os.path.isfile(path + 'local.config.json'):
             file = path + 'local.config.json'
