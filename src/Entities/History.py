@@ -15,4 +15,4 @@ class History(object):
             if maxLength is not None and len(self.entries) >= maxLength:
                 return
             for entry in history[browser]:
-                self.entries.append(HistoryEntry(browser, entry[0], False))
+                self.entries.append(HistoryEntry(browser, entry[0]))

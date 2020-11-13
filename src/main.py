@@ -1,6 +1,6 @@
 import aiohttp
 import asyncio
-from src.Entities.History import History
+from src import History
 
 sem = asyncio.Semaphore(50)
 MAX_HISTORY_ENTRIES = None
