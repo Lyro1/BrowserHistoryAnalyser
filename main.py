@@ -14,7 +14,7 @@ async def __check_urlhaus(entry: HistoryEntry, url):
             data = {'url': entry.url}
             async with session.post(url=url, data=data) as response:
                 json = await response.json()
-                entry.flagged.url_haus = json['query_status'] == 'ok' and json['url_status'] == 'online'
+                entry.flagged.url_haus = json['query_status'] == 'ok'
     except Exception as e:
         print("Unable to get url {} due to the following error: {}.".format(url, str(e)))
 
@@ -58,7 +58,7 @@ async def check_reputation(entry):
 async def check_all_history(size):
     history = History(size)
     await asyncio.gather(*[check_reputation(entry) for entry in history.entries])
-    flaggedEntries = [entry for entry in history.entries] #if entry.flagged.url_haus or entry.flagged.virus_total]
+    flaggedEntries = [entry for entry in history.entries if entry.flagged.url_haus or entry.flagged.virus_total]
     if len(flaggedEntries) == 0:
         print("No warning")
     else:
