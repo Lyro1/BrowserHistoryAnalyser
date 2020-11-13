@@ -1,0 +1,14 @@
+{
+  "limit-entries": "False",
+  "max-entries": 50,
+  "max-threads": 50,
+  "sources": {
+    "url-haus": {
+      "enabled": "True"
+    },
+    "virus-total": {
+      "enabled": "False",
+      "api-key": ""
+    }
+  }
+}
