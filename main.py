@@ -6,6 +6,7 @@ from src.config import Config
 
 config = Config()
 sem = asyncio.Semaphore(config.max_threads)
+flaggedEntries = []
 
 
 async def __check_urlhaus(entry: HistoryEntry, url):
@@ -58,12 +59,13 @@ async def check_reputation(entry):
 async def check_all_history(size):
     history = History(size)
     await asyncio.gather(*[check_reputation(entry) for entry in history.entries])
+    #[print(str(i) + " " + str(history.entries[i]))for i in range(0, len(history.entries))]
+    global flaggedEntries
     flaggedEntries = [entry for entry in history.entries if entry.flagged.url_haus or entry.flagged.virus_total]
-    if len(flaggedEntries) == 0:
-        print("No warning")
-    else:
-        [print(entry) for entry in flaggedEntries]
-
+    #if len(flaggedEntries) == 0:
+        #print("No warning")
+    #else:
+        #[print(entry) for entry in flaggedEntries]
 
 def main():
     config.load_file('src')
@@ -73,6 +75,10 @@ def main():
     finally:
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
+    if len(flaggedEntries) == 0:
+        print("No warning")
+    else:
+        [print(entry) for entry in flaggedEntries]
 
 
 if __name__ == '__main__':
