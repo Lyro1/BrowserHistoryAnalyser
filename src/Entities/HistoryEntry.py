@@ -1,11 +1,11 @@
 from .HistoryEntryFlags import HistoryEntryFlags
 
+
 class HistoryEntry(object):
 
-    def __init__(self, browser, url):
-        self.browser = browser
+    def __init__(self, url):
         self.url = url
         self.flagged = HistoryEntryFlags()
 
     def __str__(self):
-        return self.browser + ': ' + self.url + ' - flagged: ' + str(self.flagged)
+        return self.url + ' - flagged: ' + str(self.flagged)
