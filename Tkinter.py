@@ -1,5 +1,6 @@
 import tkinter
 import main
+from src.Entities.HistoryEntryFlags import HistoryEntryFlags
 
 
 def start():
@@ -8,6 +9,12 @@ def start():
 
 def perso(evt):
     main.main()
+    #test flag positif
+    """ flags = HistoryEntryFlags() 
+    flags.url_haus = True
+    entry = main.HistoryEntry("http://182.59.75.73:42447/bin.sh")
+    entry.flagged = flags
+    main.flaggedEntries.append(entry)"""
     if len(main.flaggedEntries) == 0:
         result.config(text="No warning")
         result.pack()
