@@ -75,10 +75,6 @@ def main():
     finally:
         loop.run_until_complete(loop.shutdown_asyncgens())
         loop.close()
-    if len(flaggedEntries) == 0:
-        print("No warning")
-    else:
-        [print(entry) for entry in flaggedEntries]
 
 
 if __name__ == '__main__':
