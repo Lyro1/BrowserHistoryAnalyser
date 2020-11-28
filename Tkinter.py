@@ -1,5 +1,7 @@
 import tkinter
+from tkinter import ttk
 import main
+
 from src.Entities.ConfigEntry import ConfigEntry
 from src.Entities.HistoryEntryFlags import HistoryEntryFlags
 
@@ -21,23 +23,21 @@ def start_event(evt):
     result.pack()
 
 
-def modifParam():
-    root.event_generate("<<Param>>")
 
-def modifParam_event(evt):
-    main.config.modif_file(max_entries=20, path='src')
-    '''response['limit-entries'] = limit_entries
-    if limit_entries == "True":
-        response['max-entries'] = max_entries
-    else:
-        response['max-entries'] = None'''
+
+
+def modifParam():
+    paramWindows = tkinter.Toplevel(root)
+    #button_limit_entries = ttk.Checkbutton(paramWindows, text="Limit entries ?")
+    #button_limit_entries.pack()
+    #print(button_limit_entries.instate(['selected']))
     result = tkinter.Label()
-    result.config(text="param modifié")
+    result.config(paramWindows, text="param modifié")
     result.pack()
 
 
-
 root = tkinter.Tk()
+
 title = tkinter.Label (text = "Welcome in Browser History Analyser")
 title.pack()
 
@@ -48,6 +48,8 @@ button_start.pack()
 button_change_param = tkinter.Button(text="modifier param", command=modifParam)
 button_change_param.pack()
 
+
+
+
 root.bind("<<start>>", start_event)
-root.bind("<<Param>>", modifParam_event)
 root.mainloop()
