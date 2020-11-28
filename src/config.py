@@ -34,6 +34,7 @@ class Config:
 
     def modif_file(self, limit_entries=None, max_entries=None, max_threads=None, url_haus_conf=None, virus_total_conf=None,
                    path=''):
+        self.load_file(path="src")
         if len(path) > 1:
             path = path + '/' if path[-1] != '/' else path
         response = {}
