@@ -28,11 +28,19 @@ def start_event(evt):
 
 def modifParam():
     paramWindows = tkinter.Toplevel(root)
-    #button_limit_entries = ttk.Checkbutton(paramWindows, text="Limit entries ?")
-    #button_limit_entries.pack()
-    #print(button_limit_entries.instate(['selected']))
+    button_limit_entries = ttk.Checkbutton(paramWindows, text="Limit entries")
+    button_limit_entries.pack()
+    print(button_limit_entries.instate(['selected']))
+
+    '''J'en suis ici
+    Il faut faire un bouton pour valider les paramètres
+    il faut ensuite faire les boutons permettant de modifier les paramètre'''
+
+    button_valid_param = tkinter.Button(paramWindows,text="valider param", command=validParam)
+    button_change_param.pack()
+
     result = tkinter.Label()
-    result.config(paramWindows, text="param modifié")
+    result.config(text="param modifié")
     result.pack()
 
 
