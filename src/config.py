@@ -18,10 +18,11 @@ class Config:
         file = path + 'config.json'
         if os.path.isfile(path + 'local.config.json'):
             file = path + 'local.config.json'
+            print("charge local config")
         with open(file) as json_file:
             data = json.load(json_file)
             self.limit_entries = data['limit-entries']
-            if data['limit-entries'] == "True":
+            if data['limit-entries']:
                 self.max_entries = data['max-entries']
             else:
                 self.max_entries = None
@@ -59,5 +60,5 @@ class Config:
         return 'Config: \n' + \
                'max_entries = ' + self.max_entries + \
                'max_threads = ' + self.max_threads + \
-               'url_haus = ' + str(self.url_haus) + \
-               'virus_total = ' + str(self.virus_total)
+               'url_haus = ' + self.url_haus + \
+               'virus_total = ' + self.virus_total
