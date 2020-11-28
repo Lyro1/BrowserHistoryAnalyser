@@ -1,5 +1,6 @@
 import tkinter
 import main
+from src.Entities.ConfigEntry import ConfigEntry
 from src.Entities.HistoryEntryFlags import HistoryEntryFlags
 
 
@@ -9,6 +10,7 @@ def start():
 
 def perso(evt):
     main.main()
+    modifParam(evt)
     #test flag positif
     """ flags = HistoryEntryFlags() 
     flags.url_haus = True
@@ -17,6 +19,14 @@ def perso(evt):
     main.flaggedEntries.append(entry)"""
     result.config(text=main.result())
     result.pack()
+
+def modifParam(evt):
+    main.config.modif_file(None,None,None,None,None,'src')
+    '''response['limit-entries'] = limit_entries
+    if limit_entries == "True":
+        response['max-entries'] = max_entries
+    else:
+        response['max-entries'] = None'''
 
 
 
