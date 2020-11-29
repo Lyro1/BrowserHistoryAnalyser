@@ -13,18 +13,14 @@ def start_event():
     entry = main.HistoryEntry("http://182.59.75.73:42447/bin.sh")
     entry.flagged = flags
     main.flaggedEntries.append(entry)'''
-    result = tkinter.Label()
     result.config(text=main.result())
-    result.pack()
     button_start.config(state="disable")
 
 
 def validParam_event(windows,limit_entries, max_entries, max_threads, url_haus_conf, virus_total_conf):
     main.config.modif_file(limit_entries.get(), max_entries, max_threads, url_haus_conf, virus_total_conf, "src")
     windows.destroy()
-    result = tkinter.Label()
     result.config(text="param modifié")
-    result.pack()
 
 def annulParam_event(windows):
     windows.destroy()
@@ -70,6 +66,7 @@ button_change_param.pack()
 button_close = tkinter.Button(text= "close", command=root.destroy)
 button_close.pack()
 
-
+result = tkinter.Label()
+result.pack()
 
 root.mainloop()
