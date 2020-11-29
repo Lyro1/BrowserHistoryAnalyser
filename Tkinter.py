@@ -23,6 +23,8 @@ def validParam_event(windows,limit_entries, max_entries, max_threads, url_haus_c
     main.config.modif_file(limit_entries, max_entries, max_threads, url_haus_conf, virus_total_conf, "src")
     windows.destroy()
 
+def annulParam_event(windows):
+    windows.destroy()
 
 
 def modifParam():
@@ -33,12 +35,15 @@ def modifParam():
 
     ##il faut ensuite faire les boutons permettant de modifier les paramètre
     limit_entries=True
-    max_entries=20
-    max_threads=30
+    max_entries=10
+    max_threads=50
     url_haus_conf=None
     virus_total_conf=None
     button_valid_param = tkinter.Button(paramWindows, text="valider param", command=lambda: validParam_event(paramWindows,limit_entries, max_entries, max_threads, url_haus_conf, virus_total_conf))
     button_valid_param.pack()
+    button_reset_param = tkinter.Button(paramWindows, text="Annuler modification", command=lambda: annulParam_event(paramWindows))
+    button_reset_param.pack()
+
     result = tkinter.Label()
     result.config(text="param modifié")
     result.pack()
