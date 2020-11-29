@@ -19,24 +19,25 @@ def start_event():
     button_start.config(state="disable")
 
 
-def validParam_event(limit_entries, max_entries, windows):
-    main.config.modif_file(limit_entries=limit_entries,max_entries=max_entries)
-    print("toto")
+def validParam_event(windows,limit_entries, max_entries, max_threads, url_haus_conf, virus_total_conf):
+    main.config.modif_file(limit_entries, max_entries, max_threads, url_haus_conf, virus_total_conf, "src")
     windows.destroy()
 
 
 
 def modifParam():
     paramWindows = tkinter.Toplevel(root)
-    button_limit_entries = ttk.Checkbutton(paramWindows, text="Limit entries")
-    button_limit_entries.pack()
-    print(button_limit_entries.instate(['selected']))
+    #button_limit_entries = ttk.Checkbutton(paramWindows, text="Limit entries")
+    #button_limit_entries.pack()
+    #print(button_limit_entries.instate(['selected']))
 
-    #J'en suis ici
-    #Il faut faire un bouton pour valider les paramètres
     ##il faut ensuite faire les boutons permettant de modifier les paramètre
-
-    button_valid_param = tkinter.Button(paramWindows, text="valider param", command=lambda: validParam_event(limit_entries=True, max_entries=10, windows=paramWindows))
+    limit_entries=True
+    max_entries=20
+    max_threads=30
+    url_haus_conf=None
+    virus_total_conf=None
+    button_valid_param = tkinter.Button(paramWindows, text="valider param", command=lambda: validParam_event(paramWindows,limit_entries, max_entries, max_threads, url_haus_conf, virus_total_conf))
     button_valid_param.pack()
     result = tkinter.Label()
     result.config(text="param modifié")
