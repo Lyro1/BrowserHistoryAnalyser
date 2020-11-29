@@ -33,8 +33,12 @@ def modifParam():
     #button_limit_entries.pack()
     #print(button_limit_entries.instate(['selected']))
 
-    ##il faut ensuite faire les boutons permettant de modifier les paramètre
-    limit_entries=True
+    ##il faut ensuite faire les boutons permettant de modifier les paramètres
+
+    var_case = tkinter.BooleanVar(paramWindows)
+    case = tkinter.Checkbutton(paramWindows, text="Limiter le nombre d'entrées", variable=var_case, onvalue=True, offvalue=False)
+    case.pack()
+    limit_entries=var_case.get()
     max_entries=10
     max_threads=50
     url_haus_conf=None
