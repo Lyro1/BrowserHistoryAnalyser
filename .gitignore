@@ -1,7 +1,7 @@
 # PyCharm
 .idea/
 venv/
-__pycache__
+*__pycache__*
 
 # Pytest
 .pytest_cache
