@@ -1,11 +1,11 @@
 # PyCharm
 .idea/
 venv/
-*__pycache__*
+__pycache__
+*.pyc
 
 # Pytest
 .pytest_cache
-*.pyc
 
 # Project
 local.config.json
