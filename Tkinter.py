@@ -9,11 +9,13 @@ from src.Entities.HistoryEntryFlags import HistoryEntryFlags
 def start_event():
     main.main()
     # test flag positif
-    '''flags = HistoryEntryFlags()
+    '''
+    flags = HistoryEntryFlags()
     flags.url_haus = True
     entry = main.HistoryEntry("http://182.59.75.73:42447/bin.sh")
     entry.flagged = flags
-    main.flaggedEntries.append(entry)'''
+    main.flaggedEntries.append(entry)
+    '''
     result.config(text=main.result())
     button_start.config(state="disable")
 

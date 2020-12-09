@@ -18,7 +18,6 @@ class Config:
         file = path + 'config.json'
         if os.path.isfile(path + 'local.config.json'):
             file = path + 'local.config.json'
-            print("charge local config")
         with open(file) as json_file:
             data = json.load(json_file)
             self.limit_entries = data['limit-entries']

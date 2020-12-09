@@ -2,6 +2,7 @@ import aiohttp
 import asyncio
 from src.Entities.History import History
 from src.Entities.HistoryEntry import HistoryEntry
+from src.Entities.HistoryEntryFlags import HistoryEntryFlags
 from src.config import Config
 
 config = Config()
@@ -59,13 +60,13 @@ async def check_reputation(entry):
 async def check_all_history(size):
     history = History(size)
     await asyncio.gather(*[check_reputation(entry) for entry in history.entries])
-    [print(str(i) + " " + str(history.entries[i]))for i in range(0, len(history.entries))]
+    #[print(str(i) + " " + str(history.entries[i]))for i in range(0, len(history.entries))]
     global flaggedEntries
     flaggedEntries = [entry for entry in history.entries if entry.flagged.url_haus or entry.flagged.virus_total]
-    """if len(flaggedEntries) == 0:
+    if len(flaggedEntries) == 0:
         print("No warning")
     else:
-        [print(entry) for entry in flaggedEntries]"""
+        [print(entry) for entry in flaggedEntries]
 
 def main():
     config.load_file('src')
