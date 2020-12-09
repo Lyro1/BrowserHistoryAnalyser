@@ -1,5 +1,5 @@
 import tkinter
-from tkinter import ttk
+from tkinter import *
 import main
 
 from src.Entities.ConfigEntry import ConfigEntry
@@ -38,53 +38,60 @@ def only_numeric_input(P):
 
 def add_api_key(paramWindows,api, api_zone, textzone):
     api_zone.config(textvariable=api)
-    textzone.pack()
-    api_zone.pack()
+    textzone.grid(row=5,column=0,sticky="e")
+    api_zone.grid(row=5,column=1, columnspan=2, sticky="w")
 
 
 
 def modifParam():
     paramWindows = tkinter.Toplevel(root)
+    lab0 = tkinter.Label(paramWindows, text="Limit the number of entries: ")
+    lab0.grid(row=0,column=0, sticky="e")
     limit_entries = tkinter.BooleanVar(paramWindows)
     limit_entries.set(True)
-    limit_entries_checkbox = tkinter.Checkbutton(paramWindows, text="Limiter le nombre d'entrées", variable=limit_entries)
-    limit_entries_checkbox.pack()
+    limit_entries_checkbox = tkinter.Checkbutton(paramWindows, variable=limit_entries)
+    limit_entries_checkbox.grid(row=0, column=1, columnspan=2, sticky="w")
+
     max_entries = tkinter.IntVar(paramWindows)
     max_entries.set(100)
     func_callback = paramWindows.register(only_numeric_input)
-    lab = tkinter.Label(paramWindows, text="Nombre d'entrées limites : ")
-    lab.pack()
+    lab = tkinter.Label(paramWindows, text="Number of max entries: ")
+    lab.grid(row=1,column=0,sticky="e")
     max_entries_zone = tkinter.Entry(paramWindows, textvariable=max_entries, validate='all', validatecommand=(func_callback, "%P"))
-    max_entries_zone.pack()
+    max_entries_zone.grid(row=1,column=1, columnspan=2,sticky="w")
+
+    lab1 = tkinter.Label(paramWindows, text="Number of parallel threads: ")
+    lab1.grid(row=2,column=0,sticky="e")
     max_threads = tkinter.IntVar(paramWindows)
     max_threads.set(32)
-    max_threads_zone = tkinter.Scale(paramWindows, orient='horizontal', from_=0, to=64, resolution=2, tickinterval=8, length=350, label='Nb threads parallèle', variable=max_threads)
-    max_threads_zone.pack()
+    max_threads_zone = tkinter.Scale(paramWindows, orient='horizontal', from_=0, to=64, resolution=2, tickinterval=8, length=350, variable=max_threads)
+    max_threads_zone.grid(row=2,column=1, columnspan=2,sticky="w")
 
+    lab2 = tkinter.Label(paramWindows, text="Check with URLHaus: ")
+    lab2.grid(row=3,column=0,sticky="e")
     url_haus_conf = tkinter.BooleanVar(paramWindows)
     url_haus_conf.set(True)
-    url_haus_conf_checkbox = tkinter.Checkbutton(paramWindows, text="vérifier avec url-Haus",
+    url_haus_conf_checkbox = tkinter.Checkbutton(paramWindows,
                                                  variable=url_haus_conf)
-    url_haus_conf_checkbox.pack()
+    url_haus_conf_checkbox.grid(row=3,column=1, columnspan=2,sticky="w")
 
+    lab3 = tkinter.Label(paramWindows, text="Check with VirusTotal: ")
+    lab3.grid(row=4,column=0,sticky="e")
     api = tkinter.StringVar(paramWindows)
     api_zone = tkinter.Entry(paramWindows)
-    max_entries_zone.pack()
     virus_total_conf = tkinter.BooleanVar(paramWindows)
     virus_total_conf.set(False)
-    virus_total_conf_checkbox = tkinter.Checkbutton(paramWindows, text="vérifier avec Virus-Total",
-                                                 variable=virus_total_conf, command=lambda: add_api_key(paramWindows,api, api_zone,textzone))
-    virus_total_conf_checkbox.pack()
+    virus_total_conf_checkbox = tkinter.Checkbutton(paramWindows, variable=virus_total_conf, command=lambda: add_api_key(paramWindows,api, api_zone,textzone))
+    virus_total_conf_checkbox.grid(row=4,column=1, columnspan=2,sticky="w")
 
-
-    button_valid_param = tkinter.Button(paramWindows, text="valider param",
+    button_valid_param = tkinter.Button(paramWindows, text="Validate settings",
                                         command=lambda: validParam_event(paramWindows, limit_entries, max_entries,
                                                                          max_threads, url_haus_conf, virus_total_conf, api))
-    button_valid_param.pack()
-    button_reset_param = tkinter.Button(paramWindows, text="Annuler modification",
+    button_valid_param.grid(row=6,column=1)
+    button_reset_param = tkinter.Button(paramWindows, text="Cancel",
                                         command=lambda: annulParam_event(paramWindows))
-    button_reset_param.pack()
-    textzone = tkinter.Label(paramWindows, text="insérer une key api pour virus-total")
+    button_reset_param.grid(row=6,column=2)
+    textzone = tkinter.Label(paramWindows, text="Insert an api-key for VirusTotal: ")
     paramWindows.mainloop()
 
 
@@ -93,17 +100,20 @@ def modifParam():
 
 root = tkinter.Tk()
 root.title('Browser History Analyser')
+root.geometry("500x200")
+
+
 
 title = tkinter.Label(text="Welcome in Browser History Analyser")
 title.pack()
 
-button_start = tkinter.Button(text="START", command=start_event)
+button_start = tkinter.Button(text="Start analysis", command=start_event)
 button_start.pack()
 
-button_change_param = tkinter.Button(text="modifier param", command=modifParam)
+button_change_param = tkinter.Button(text="Change settings", command=modifParam)
 button_change_param.pack()
 
-button_close = tkinter.Button(text="close", command=root.destroy)
+button_close = tkinter.Button(text="Exit", command=root.destroy)
 button_close.pack()
 
 result = tkinter.Label()
