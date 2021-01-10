@@ -11,7 +11,7 @@ class History(object):
 
     def __get_entries(self, max_length):
         history = get_history()
-        history_entries = history.entries
+        history_entries = history.histories
         history_entries.reverse()
         self.entries = []
         if max_length is not None:
